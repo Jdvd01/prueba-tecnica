@@ -1,0 +1,57 @@
+# Flask
+# Virtual environment
+.venv/
+env/
+venv/
+# Byte-compiled / optimized / compiled files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+# IDE-specific files (e.g., VS Code, PyCharm)
+.vscode/
+.idea/
+# Flask-specific
+instance/
+.webassets-cache/
+# Test-related files
+.pytest_cache/
+.coverage
+htmlcov/
+# Distribution and build artifacts
+dist/
+build/
+*.egg-info/
+# Logs and temporary files
+*.log
+*.tmp
+temp/
+# Environment variables
+.env
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+# Dependencies
+node_modules/
+# Build artifacts
+dist-ssr/
+build/ # If you use a custom build directory
+.env.*.local # Local-only environment variables (e.g., .env.development.local)
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json # Keep extensions.json to share recommended extensions
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+# OS-specific files
+Thumbs.db
+# Test coverage
+coverage/
+# Misc
+.cache/
+.temp/
