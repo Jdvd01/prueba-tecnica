@@ -27,5 +27,5 @@ export const calculateTotal = (orders: OrderFromApi[]) => {
 	const total = orders.reduce((acc, current) => {
 		return acc + current.amount;
 	}, 0);
-	return total;
+	return formatCurrency(total);
 };
