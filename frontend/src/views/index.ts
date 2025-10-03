@@ -1,2 +1,2 @@
 export * from "./Orders.tsx";
-export * from "./Users.tsx";
+export * from "./dashboard.tsx";

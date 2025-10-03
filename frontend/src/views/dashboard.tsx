@@ -1,0 +1,28 @@
+import { Modal } from "@/components/dashboard";
+import { Users } from "lucide-react";
+
+export function Dashboard() {
+	return (
+		<div className="min-h-screen bg-background">
+			<div className="container mx-auto px-4 py-8 max-w-6xl">
+				<div className="flex items-center justify-between mb-8">
+					<div className="space-y-1">
+						<div className="flex items-center gap-3">
+							<div className="rounded-lg bg-primary/10 p-2">
+								<Users className="h-6 w-6 text-primary" />
+							</div>
+							<h1 className="text-3xl font-bold tracking-tight">
+								Dashboard de Usuarios
+							</h1>
+						</div>
+						<p className="text-muted-foreground">
+							Gestiona y visualiza todos los usuarios registrados en la
+							aplicación
+						</p>
+					</div>
+					<Modal />
+				</div>
+			</div>
+		</div>
+	);
+}
