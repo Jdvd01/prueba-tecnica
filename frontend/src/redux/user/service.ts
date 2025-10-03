@@ -16,9 +16,18 @@ const createNewUser = async (userData: UserData) => {
 	return data;
 };
 
+const getUserWithOrders = async (id: string) => {
+	const response = await axios.get(
+		`${env.VITE_BACKEND_URL}/users/${id}/orders`
+	);
+	const data = response.data;
+	return data;
+};
+
 const userService = {
 	getAllUsers,
 	createNewUser,
+	getUserWithOrders,
 };
 
 export default userService;

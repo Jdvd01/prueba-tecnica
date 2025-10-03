@@ -3,6 +3,7 @@ import type {
 	UserData,
 	UserInitialState,
 	UsersWithPagination,
+	UserFromApi,
 } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userService from "./service";
@@ -14,7 +15,15 @@ const paginationDefault = {
 	total: 0,
 };
 
+const userDefault = {
+	id: "",
+	created_at: "",
+	name: "",
+	email: "",
+};
+
 const initialState: UserInitialState = {
+	user: userDefault,
 	users: [],
 	pagination: paginationDefault,
 	isLoading: false,
@@ -24,9 +33,9 @@ const initialState: UserInitialState = {
 };
 
 export const getAllUsers = createAsyncThunk<
-	UsersWithPagination, // Retorno en success
-	number, // Argumento (page)
-	{ rejectValue: string } // Tipo de error
+	UsersWithPagination,
+	number,
+	{ rejectValue: string }
 >("user/getAllUsers", async (page: number, thunkAPI) => {
 	try {
 		return await userService.getAllUsers(page);
@@ -65,6 +74,28 @@ export const createNewUser = createAsyncThunk(
 		}
 	}
 );
+
+export const getUserWithOrders = createAsyncThunk<
+	{ user: UserFromApi },
+	string,
+	{ rejectValue: string }
+>("user/getUserWithOrders", async (id: string, thunkAPI) => {
+	try {
+		return await userService.getUserWithOrders(id);
+	} catch (err) {
+		let message: string;
+
+		if (err instanceof AxiosError && err.response) {
+			message = err.response.data?.message || err.message;
+		} else if (err instanceof Error) {
+			message = err.message;
+		} else {
+			message = String(err);
+		}
+
+		return thunkAPI.rejectWithValue(message);
+	}
+});
 
 export const userSlice = createSlice({
 	name: "user",
@@ -105,6 +136,24 @@ export const userSlice = createSlice({
 				state.isError = false;
 			})
 			.addCase(createNewUser.rejected, (state) => {
+				state.isLoading = false;
+				state.isSuccess = false;
+				state.isError = true;
+			})
+
+			// Traer usuario especifico con ordenes
+			.addCase(getUserWithOrders.pending, (state) => {
+				state.isLoading = true;
+				state.isSuccess = false;
+				state.isError = false;
+			})
+			.addCase(getUserWithOrders.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isSuccess = true;
+				state.isError = false;
+				state.user = action.payload.user;
+			})
+			.addCase(getUserWithOrders.rejected, (state) => {
 				state.isLoading = false;
 				state.isSuccess = false;
 				state.isError = true;
