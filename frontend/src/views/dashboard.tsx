@@ -23,7 +23,7 @@ export function Dashboard() {
 	return (
 		<div className="min-h-screen bg-background">
 			<div className="container mx-auto px-4 py-8 max-w-6xl">
-				<div className="flex items-center justify-between mb-8">
+				<div className="flex flex-col gap-8 sm:flex-row md:items-center md:justify-between mb-8">
 					<div className="space-y-1">
 						<div className="flex items-center gap-3">
 							<div className="rounded-lg bg-primary/10 p-2">
@@ -38,7 +38,7 @@ export function Dashboard() {
 							aplicación
 						</p>
 					</div>
-					<Modal />
+					<Modal page={currentPage} />
 				</div>
 
 				<UsersGrid

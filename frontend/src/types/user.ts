@@ -1,4 +1,4 @@
-import type { Pagination } from "./general";
+import type { ErrorFromApi, Pagination } from "./general";
 import type { OrderFromApi } from "./order";
 
 export interface UserData {
@@ -23,4 +23,5 @@ export interface UserInitialState {
 	isLoading: boolean;
 	isSuccess: boolean;
 	isError: boolean;
+	message: ErrorFromApi;
 }

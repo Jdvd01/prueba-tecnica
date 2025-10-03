@@ -4,3 +4,7 @@ export interface Pagination {
 	per_page: number;
 	total: number;
 }
+
+export interface ErrorFromApi {
+	error: string;
+}
