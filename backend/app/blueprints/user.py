@@ -34,7 +34,7 @@ def post_user():
 def get_user_orders(user_id):
     user_or_error = user_by_id(user_id)
 
-    if isinstance(user_or_error, User):
+    if not isinstance(user_or_error, User):
         return jsonify(user_or_error[0]), user_or_error[1]
 
-    return jsonify({"user": user_or_error}), 200
+    return jsonify({"user": user_or_error.serialize(include_orders=True)}), 200

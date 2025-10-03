@@ -8,7 +8,7 @@ def user_by_id(id: int):
     if user is None:
         return {"error": "Usuario no encontrado"}, 404
     
-    return user.serialize(include_orders=True)
+    return user
 
 def user_by_email(email: str):
     user = User.query.filter_by(email=email).first()
