@@ -20,7 +20,8 @@ def validate_order_data(data: Dict) -> Optional[Tuple[Dict, int]]:
         if is_missing_or_empty:
             return {"error": error_message}, 400
 
-    if(data["amount"] < 0):
+    amount = int(data["amount"])
+    if(amount < 0):
         return {"error": "Ingrese un amount válido, mayor a 0"}, 400
 
     user = user_by_id(data["user_id"])
