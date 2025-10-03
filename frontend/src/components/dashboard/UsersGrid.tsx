@@ -99,7 +99,7 @@ export function UsersGrid({
 
 							{/* Botón de órdenes */}
 							<Link
-								to={`/users/${user.id}/orders`}
+								to={`/user/${user.id}`}
 								className="flex items-center w-fit p-1 px-2 border border-primary/30 rounded"
 							>
 								<ShoppingBag className="h-4 w-4 mr-2" />
