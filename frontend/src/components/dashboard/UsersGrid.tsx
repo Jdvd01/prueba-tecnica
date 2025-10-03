@@ -1,24 +1,46 @@
 import type { SetStateAction } from "react";
 import { Link } from "react-router";
 import type { UserFromApi, UsersWithPagination } from "@/types/user";
-import { Mail, ShoppingBag, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+	Mail,
+	ShoppingBag,
+	ChevronLeft,
+	ChevronRight,
+	User,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { CardSkeleton } from "./CardSkeleton";
 
 interface UsersGridProps {
 	data: UsersWithPagination;
 	currentPage: number;
 	setCurrentPage: React.Dispatch<SetStateAction<number>>;
+	isLoading: boolean;
 }
 
 export function UsersGrid({
 	data,
 	currentPage,
 	setCurrentPage,
+	isLoading,
 }: UsersGridProps) {
 	const { pagination, users } = data;
 	const { pages } = pagination;
+
+	if (isLoading) {
+		const arrayPlaceholder = Array.from({ length: 9 }, () => 0);
+		return (
+			<div className="space-y-6">
+				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+					{arrayPlaceholder.map(() => (
+						<CardSkeleton />
+					))}
+				</div>
+			</div>
+		);
+	}
 
 	if (users.length === 0) {
 		return (
@@ -52,7 +74,7 @@ export function UsersGrid({
 							{/* Avatar y Badge */}
 							<div className="flex items-start justify-between">
 								<div className="rounded-full bg-primary/10 p-3">
-									<Mail className="h-6 w-6 text-primary" />
+									<User className="h-6 w-6 text-primary" />
 								</div>
 								<Badge
 									variant="secondary"
@@ -63,7 +85,7 @@ export function UsersGrid({
 							</div>
 
 							{/* Información del usuario */}
-							<div className="space-y-2">
+							<div className="flex justify-between items-center">
 								<h3 className="font-semibold text-lg leading-none">
 									{user.name}
 								</h3>
@@ -74,9 +96,12 @@ export function UsersGrid({
 							</div>
 
 							{/* Botón de órdenes */}
-							<Link to={`/users/${user.id}/orders`} className="w-full">
+							<Link
+								to={`/users/${user.id}/orders`}
+								className="flex items-center w-fit p-1 px-2 border border-primary/30 rounded"
+							>
 								<ShoppingBag className="h-4 w-4 mr-2" />
-								Ver Órdenes
+								Ver ordenes
 							</Link>
 						</div>
 					</Card>
