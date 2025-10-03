@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 flask = "*"
 flask-cors = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
@@ -14,3 +17,6 @@ python_version = "3.12"
 
 [scripts]
 start="python server.py"
+init="flask --app server.py db init"
+migrate="flask --app server.py db migrate"
+upgrade="flask --app server.py db upgrade"
