@@ -1,4 +1,5 @@
 import { env } from "@/envConfig";
+import type { UserData } from "@/types/user";
 import axios from "axios";
 
 const getAllUsers = async (page: number) => {
@@ -9,8 +10,15 @@ const getAllUsers = async (page: number) => {
 	return data;
 };
 
+const createNewUser = async (userData: UserData) => {
+	const response = await axios.post(`${env.VITE_BACKEND_URL}/users/`, userData);
+	const data = response.data;
+	return data;
+};
+
 const userService = {
 	getAllUsers,
+	createNewUser,
 };
 
 export default userService;

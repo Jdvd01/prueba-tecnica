@@ -30,12 +30,14 @@ export function UsersGrid({
 	const { pages } = pagination;
 
 	if (isLoading) {
-		const arrayPlaceholder = Array.from({ length: 9 }, () => 0);
+		const arrayPlaceholder = Array.from({ length: 9 }, () =>
+			crypto.randomUUID()
+		);
 		return (
 			<div className="space-y-6">
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-					{arrayPlaceholder.map(() => (
-						<CardSkeleton />
+					{arrayPlaceholder.map((item) => (
+						<CardSkeleton key={item} />
 					))}
 				</div>
 			</div>

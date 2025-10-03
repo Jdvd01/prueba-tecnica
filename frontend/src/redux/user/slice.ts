@@ -1,5 +1,9 @@
 import { AxiosError } from "axios";
-import type { UserInitialState } from "@/types/user";
+import type {
+	UserData,
+	UserInitialState,
+	UsersWithPagination,
+} from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userService from "./service";
 
@@ -16,13 +20,36 @@ const initialState: UserInitialState = {
 	isLoading: false,
 	isSuccess: false,
 	isError: false,
+	message: { error: "" },
 };
 
-export const getAllUsers = createAsyncThunk(
-	"user/getAllUsers",
-	async (page: number, thunkAPI) => {
+export const getAllUsers = createAsyncThunk<
+	UsersWithPagination, // Retorno en success
+	number, // Argumento (page)
+	{ rejectValue: string } // Tipo de error
+>("user/getAllUsers", async (page: number, thunkAPI) => {
+	try {
+		return await userService.getAllUsers(page);
+	} catch (err) {
+		let message: string;
+
+		if (err instanceof AxiosError && err.response) {
+			message = err.response.data?.error || err.message;
+		} else if (err instanceof Error) {
+			message = err.message;
+		} else {
+			message = String(err);
+		}
+
+		return thunkAPI.rejectWithValue(message);
+	}
+});
+
+export const createNewUser = createAsyncThunk(
+	"user/createNewUser",
+	async (userData: UserData, thunkAPI) => {
 		try {
-			return await userService.getAllUsers(page);
+			await userService.createNewUser(userData);
 		} catch (err) {
 			let message: string;
 
@@ -47,6 +74,7 @@ export const userSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
+			// Traer todos los usuarios
 			.addCase(getAllUsers.pending, (state) => {
 				state.isLoading = true;
 				state.isSuccess = false;
@@ -60,6 +88,23 @@ export const userSlice = createSlice({
 				state.pagination = action.payload.pagination;
 			})
 			.addCase(getAllUsers.rejected, (state) => {
+				state.isLoading = false;
+				state.isSuccess = false;
+				state.isError = true;
+			})
+
+			// Crear nuevo usuario
+			.addCase(createNewUser.pending, (state) => {
+				state.isLoading = true;
+				state.isSuccess = false;
+				state.isError = false;
+			})
+			.addCase(createNewUser.fulfilled, (state) => {
+				state.isLoading = false;
+				state.isSuccess = true;
+				state.isError = false;
+			})
+			.addCase(createNewUser.rejected, (state) => {
 				state.isLoading = false;
 				state.isSuccess = false;
 				state.isError = true;

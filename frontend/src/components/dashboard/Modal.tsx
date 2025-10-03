@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import type { UserData } from "@/types/user";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -10,25 +12,33 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { UserData } from "@/types/user";
-import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/redux/store";
+import { createNewUser, getAllUsers } from "@/redux/user/slice";
 
-export function Modal() {
+interface ModalProps {
+	page: number;
+}
+
+const userDataDefault = {
+	name: "",
+	email: "",
+};
+
+export function Modal({ page }: ModalProps) {
+	const dispatch = useDispatch<AppDispatch>();
+
 	const [open, setOpen] = useState(false);
-	const [userData, setUserData] = useState<UserData>({
-		name: "",
-		email: "",
-	});
+	const [userData, setUserData] = useState<UserData>(userDataDefault);
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
 		try {
-			console.log("fetch");
+			await dispatch(createNewUser(userData));
+			setUserData(userDataDefault);
+			setOpen(false);
+			await dispatch(getAllUsers(page));
 		} catch (error) {
 			console.log(error);
-		} finally {
-			setOpen(false);
-			setUserData({ name: "", email: "" });
 		}
 	};
 
@@ -40,7 +50,9 @@ export function Modal() {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
-				<Button variant="outline">Agregar usuario</Button>
+				<Button variant="outline" className="border border-primary/30">
+					Agregar usuario
+				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
