@@ -1,7 +1,22 @@
 import { Modal } from "@/components/dashboard";
+import { UsersGrid } from "@/components/dashboard/UsersGrid";
+import type { UsersWithPagination } from "@/types/user";
 import { Users } from "lucide-react";
+import { useState } from "react";
 
 export function Dashboard() {
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const data: UsersWithPagination = {
+		pagination: {
+			page: 1,
+			pages: 1,
+			per_page: 9,
+			total: 10,
+		},
+		users: [],
+	};
+
 	return (
 		<div className="min-h-screen bg-background">
 			<div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -22,6 +37,12 @@ export function Dashboard() {
 					</div>
 					<Modal />
 				</div>
+
+				<UsersGrid
+					data={data}
+					currentPage={currentPage}
+					setCurrentPage={setCurrentPage}
+				/>
 			</div>
 		</div>
 	);
