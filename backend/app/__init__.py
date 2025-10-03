@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
+
 from .config import Config
 from .extensions import db, migrate
 from .blueprints.user import user_blueprint
+from .blueprints.order import order_blueprint
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +18,7 @@ def create_app():
 
     # Blueprints
     app.register_blueprint(user_blueprint)
+    app.register_blueprint(order_blueprint)
 
     @app.route("/")
     def root():
