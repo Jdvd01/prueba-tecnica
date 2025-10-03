@@ -13,10 +13,12 @@ def list_users(page, per_page):
         users_query = User.query.paginate(page=page, per_page=per_page, error_out=False)
 
     users_with_pagination = {
-        "page": users_query.page,
-        "per_page": users_query.per_page,
-        "total": users_query.total,
-        "pages": users_query.pages,
+        "pagination": {
+            "page": users_query.page,
+            "per_page": users_query.per_page,
+            "total": users_query.total,
+            "pages": users_query.pages,
+        },
         "users": serialize_users(users_query.items)
     }
 

@@ -13,9 +13,7 @@ def get_users():
     page = request.args.get("page", default=1, type=int)
     per_page = request.args.get("per_page", default=10, type=int)
 
-    return jsonify({
-        "users": list_users(page, per_page)
-    }), 200
+    return jsonify(list_users(page, per_page)), 200
 
 @user_blueprint.route("/", methods=["POST"])
 def post_user():
