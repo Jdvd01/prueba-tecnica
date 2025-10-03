@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/redux/store";
 import type { OrderData } from "@/types/order";
 import { getUserWithOrders } from "@/redux/user/slice";
+import { createNewOrder } from "@/redux/order/slice";
 
 interface ModalProps {
 	id: string;
@@ -34,7 +35,7 @@ export function Modal({ id }: ModalProps) {
 
 	const handleSubmit = async () => {
 		try {
-			// await dispatch(createNewOrder(orderData));
+			await dispatch(createNewOrder(orderData));
 			handleClean();
 			setOpen(false);
 			await dispatch(getUserWithOrders(id));

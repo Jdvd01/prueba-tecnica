@@ -1,3 +1,4 @@
+import type { ErrorFromApi } from "./general";
 import type { UserFromApi } from "./user";
 
 export interface OrderData {
@@ -10,4 +11,13 @@ export interface OrderFromApi extends OrderData {
 	id: string;
 	created_at: string;
 	user?: UserFromApi;
+}
+
+export interface OrderInitialState {
+	order: OrderFromApi;
+	orders: OrderFromApi[];
+	isLoading: boolean;
+	isSuccess: boolean;
+	isError: boolean;
+	message: ErrorFromApi;
 }
