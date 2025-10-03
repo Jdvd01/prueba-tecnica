@@ -18,6 +18,7 @@ export interface UsersWithPagination {
 }
 
 export interface UserInitialState {
+	user: UserFromApi;
 	users: UserFromApi[];
 	pagination: Pagination;
 	isLoading: boolean;
