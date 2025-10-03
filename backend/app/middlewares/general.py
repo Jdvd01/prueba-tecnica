@@ -11,3 +11,11 @@ def validate_pagination(page, per_page):
         page = PaginationLimits.MIN_PAGE.value
 
     return page, per_page
+
+def format_data(data):
+    clean_dict = {
+        key: value.strip() if isinstance(value, str) else value
+        for key, value in data.items()
+    }
+    
+    return clean_dict

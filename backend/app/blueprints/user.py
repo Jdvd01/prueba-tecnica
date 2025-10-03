@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from app.controllers.user import list_users, create_user
 from app.middlewares.user import user_by_id, validate_user_data
 from app.models.user import User
+from app.middlewares.general import format_data
 
 user_blueprint = Blueprint("user", __name__, url_prefix="/users")
 
@@ -20,11 +21,13 @@ def get_users():
 def post_user():
     data = request.get_json() or {}
 
-    error = validate_user_data(data)
+    formated_data = format_data(data)
+
+    error = validate_user_data(formated_data)
     if error:
         return jsonify(error[0]), error[1]
 
-    user = create_user(data)
+    user = create_user(formated_data)
     return jsonify(user), 201
 
 @user_blueprint.route("/<uuid:user_id>/orders", methods=["GET"])

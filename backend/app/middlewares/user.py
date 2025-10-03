@@ -17,11 +17,11 @@ def user_by_email(email: str):
 def validate_user_data(data: Dict) -> Optional[Tuple[Dict, int]]:
     name = data.get("name")
     if not name or not str(data["name"]).strip():
-        return {"error": "El campo nombre es obligatorio"}, 400
+        return {"error": "El campo name es obligatorio"}, 400
     
     email = data.get("email")
     if not email or not EMAIL_REGEX.match(email):
-        return {"error": "Ingrese un email valido"}, 400
+        return {"error": "Ingrese un email válido"}, 400
 
     user = user_by_email(email)
     if user is not None:
