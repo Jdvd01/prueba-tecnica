@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Users } from "lucide-react";
-import { Modal } from "@/components/dashboard";
-import { UsersGrid } from "@/components/dashboard/UsersGrid";
+import { Modal, UsersGrid } from "@/components/dashboard";
 
 import { getAllUsers } from "@/redux/user/slice";
 import { useDispatch, useSelector } from "react-redux";
