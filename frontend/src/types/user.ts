@@ -16,3 +16,11 @@ export interface UsersWithPagination {
 	pagination: Pagination;
 	users: UserFromApi[];
 }
+
+export interface UserInitialState {
+	users: UserFromApi[];
+	pagination: Pagination;
+	isLoading: boolean;
+	isSuccess: boolean;
+	isError: boolean;
+}
