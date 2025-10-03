@@ -1,21 +1,24 @@
+import { useEffect, useState } from "react";
+import { Users } from "lucide-react";
 import { Modal } from "@/components/dashboard";
 import { UsersGrid } from "@/components/dashboard/UsersGrid";
-import type { UsersWithPagination } from "@/types/user";
-import { Users } from "lucide-react";
-import { useState } from "react";
+
+import { getAllUsers } from "@/redux/user/slice";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../redux/store";
 
 export function Dashboard() {
+	const dispatch = useDispatch<AppDispatch>();
+
+	const { users, pagination, isLoading } = useSelector(
+		(state: RootState) => state.user
+	);
+
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const data: UsersWithPagination = {
-		pagination: {
-			page: 1,
-			pages: 1,
-			per_page: 9,
-			total: 10,
-		},
-		users: [],
-	};
+	useEffect(() => {
+		dispatch(getAllUsers(currentPage));
+	}, [currentPage, dispatch]);
 
 	return (
 		<div className="min-h-screen bg-background">
@@ -39,9 +42,10 @@ export function Dashboard() {
 				</div>
 
 				<UsersGrid
-					data={data}
+					data={{ pagination, users }}
 					currentPage={currentPage}
 					setCurrentPage={setCurrentPage}
+					isLoading={isLoading}
 				/>
 			</div>
 		</div>
