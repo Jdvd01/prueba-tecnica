@@ -7,6 +7,7 @@ import type {
 } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userService from "./service";
+import { generateErrorToast, generateSuccessToast } from "@/lib/utils";
 
 const paginationDefault = {
 	page: 1,
@@ -59,11 +60,16 @@ export const createNewUser = createAsyncThunk(
 	async (userData: UserData, thunkAPI) => {
 		try {
 			await userService.createNewUser(userData);
+			generateSuccessToast({ title: "Usuario creado", description: "" });
 		} catch (err) {
 			let message: string;
 
 			if (err instanceof AxiosError && err.response) {
 				message = err.response.data?.message || err.message;
+				generateErrorToast({
+					title: "Ocurrio un error",
+					description: err?.response.data.error,
+				});
 			} else if (err instanceof Error) {
 				message = err.message;
 			} else {

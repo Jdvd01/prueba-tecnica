@@ -1,5 +1,7 @@
+import type { ToastParameters } from "@/types/general";
 import type { OrderFromApi } from "@/types/order";
 import { clsx, type ClassValue } from "clsx";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -28,4 +30,19 @@ export const calculateTotal = (orders: OrderFromApi[]) => {
 		return acc + current.amount;
 	}, 0);
 	return formatCurrency(total);
+};
+
+export const generateSuccessToast = ({
+	title,
+	description,
+}: ToastParameters) => {
+	toast.success(title, {
+		description,
+	});
+};
+
+export const generateErrorToast = ({ title, description }: ToastParameters) => {
+	toast.error(title, {
+		description,
+	});
 };

@@ -81,6 +81,7 @@ export function Modal({ id }: ModalProps) {
 							id="amount"
 							name="amount"
 							type="number"
+							min={1}
 							placeholder="123"
 							onChange={handleChange}
 							value={orderData.amount}

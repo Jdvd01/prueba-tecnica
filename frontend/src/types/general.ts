@@ -8,3 +8,8 @@ export interface Pagination {
 export interface ErrorFromApi {
 	error: string;
 }
+
+export interface ToastParameters {
+	title: string;
+	description: string;
+}

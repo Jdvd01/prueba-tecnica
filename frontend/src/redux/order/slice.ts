@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import orderService from "./service";
 import type { OrderData, OrderInitialState } from "@/types/order";
+import { generateErrorToast, generateSuccessToast } from "@/lib/utils";
 
 // const paginationDefault = {
 // 	page: 1,
@@ -32,11 +33,19 @@ export const createNewOrder = createAsyncThunk(
 	async (orderData: OrderData, thunkAPI) => {
 		try {
 			await orderService.createNewOrder(orderData);
+			generateSuccessToast({
+				title: "Orden creada",
+				description: "Gracias por su compra!",
+			});
 		} catch (err) {
 			let message: string;
 
 			if (err instanceof AxiosError && err.response) {
 				message = err.response.data?.message || err.message;
+				generateErrorToast({
+					title: "Ocurrio un error",
+					description: err?.response.data.error,
+				});
 			} else if (err instanceof Error) {
 				message = err.message;
 			} else {
