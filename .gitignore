@@ -55,3 +55,6 @@ coverage/
 # Misc
 .cache/
 .temp/
+
+*.db
+migrations
