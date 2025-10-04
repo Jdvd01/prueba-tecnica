@@ -175,3 +175,7 @@ El script `backend/scripts/generate_data.py` se utiliza para poblar la base de d
 - **Advertencia Importante:** Es crucial ejecutar `pipenv run setup` antes de `pipenv run dummy`. Ejecutar `dummy` primero puede causar errores en el proceso de migración de la base de datos.
 - **Advertencia:** La ejecución del script `generate_data.py` **eliminará todos los datos existentes** en las tablas `users` y `orders` antes de insertar nuevos datos de prueba. Úsalo con precaución en un entorno de producción o si tienes datos valiosos.
 - El script `generate_data.py` crea 20 usuarios de prueba y un número aleatorio de pedidos (1 a 5) para cada usuario.
+
+## Funcionalidad Adicional
+
+Se ha añadido la funcionalidad de búsqueda de usuarios por nombre o email en el input del dashboard, permitiendo una fácil localización de usuarios.
