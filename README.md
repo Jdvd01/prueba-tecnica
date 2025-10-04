@@ -159,11 +159,19 @@ Estas dependencias se instalarán automáticamente al ejecutar `pip install -r r
 
 ## Notas Adicionales para la Generación de Datos de Prueba
 
-El script `backend/generate_data.py` se utiliza para poblar la base de datos con usuarios y pedidos de ejemplo.
+El script `backend/scripts/generate_data.py` se utiliza para poblar la base de datos con usuarios y pedidos de ejemplo.
 
-- Para generar datos de prueba, asegúrate de que tu entorno virtual esté activo y ejecuta:
-  ```bash
-  python generate_data.py
-  ```
-- **Advertencia:** La ejecución de este script **eliminará todos los datos existentes** en las tablas `users` y `orders` antes de insertar nuevos datos de prueba. Úsalo con precaución en un entorno de producción o si tienes datos valiosos.
-- El script crea 20 usuarios de prueba y un número aleatorio de pedidos (1 a 5) para cada usuario.
+- Para preparar la base de datos y generar datos de prueba, asegúrate de que tu entorno virtual esté activo y ejecuta en el directorio `backend/`:
+  - **Si usaste `venv`:**
+    ```bash
+    python scripts/db_setup.py
+    python scripts/generate_data.py
+    ```
+  - **Si usaste `pipenv`:**
+    ```bash
+    pipenv run setup
+    pipenv run dummy
+    ```
+- **Advertencia Importante:** Es crucial ejecutar `pipenv run setup` antes de `pipenv run dummy`. Ejecutar `dummy` primero puede causar errores en el proceso de migración de la base de datos.
+- **Advertencia:** La ejecución del script `generate_data.py` **eliminará todos los datos existentes** en las tablas `users` y `orders` antes de insertar nuevos datos de prueba. Úsalo con precaución en un entorno de producción o si tienes datos valiosos.
+- El script `generate_data.py` crea 20 usuarios de prueba y un número aleatorio de pedidos (1 a 5) para cada usuario.
