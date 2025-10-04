@@ -21,7 +21,7 @@ def validate_order_data(data: Dict) -> Optional[Tuple[Dict, int]]:
             return {"error": error_message}, 400
 
     amount = int(data["amount"])
-    if(amount < 0):
+    if not isinstance(amount, int) or amount <= 0:
         return {"error": "Ingrese un amount válido, mayor a 0"}, 400
 
     user = user_by_id(data["user_id"])
