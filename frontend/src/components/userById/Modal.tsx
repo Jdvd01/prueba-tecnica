@@ -25,7 +25,7 @@ export function Modal({ id }: ModalProps) {
 	const orderDataDefault = {
 		user_id: id,
 		product_name: "",
-		amount: 1,
+		amount: "",
 	};
 
 	const dispatch = useDispatch<AppDispatch>();
@@ -46,6 +46,7 @@ export function Modal({ id }: ModalProps) {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
+		if (name == "amount" && !/^[1-9]\d*$/.test(value)) return;
 		setOrderData({ ...orderData, [name]: value });
 	};
 
@@ -76,12 +77,10 @@ export function Modal({ id }: ModalProps) {
 						/>
 					</div>
 					<div className="grid gap-3">
-						<Label htmlFor="amount">Amount</Label>
+						<Label htmlFor="amount">Cantidad</Label>
 						<Input
 							id="amount"
 							name="amount"
-							type="number"
-							min={1}
 							placeholder="123"
 							onChange={handleChange}
 							value={orderData.amount}

@@ -1,15 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-	ArrowLeft,
-	Mail,
-	ShoppingBag,
-	Calendar,
-	DollarSign,
-} from "lucide-react";
+import { ArrowLeft, Mail, ShoppingBag, Calendar, Package } from "lucide-react";
 import { Link, useParams } from "react-router";
 import { useEffect } from "react";
-import { calculateTotal, formatCurrency, formatDate } from "@/lib/utils";
+import { calculateTotal, formatDate } from "@/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserWithOrders } from "@/redux/user/slice";
 import type { AppDispatch, RootState } from "@/redux/store";
@@ -112,12 +106,14 @@ export default function UserDetailPage() {
 					<Card className="p-6">
 						<div className="flex items-center gap-4">
 							<div className="rounded-lg bg-primary/10 p-3">
-								<DollarSign className="h-6 w-6 text-primary" />
+								<Package className="h-6 w-6 text-primary" />
 							</div>
 							<div>
-								<p className="text-sm text-muted-foreground">Total Gastado</p>
+								<p className="text-sm text-muted-foreground">
+									Total de Productos
+								</p>
 								<p className="text-2xl font-bold">
-									{calculateTotal(user.orders ?? [])}
+									{calculateTotal(user.orders)}
 								</p>
 							</div>
 						</div>
@@ -164,7 +160,10 @@ export default function UserDetailPage() {
 										</div>
 										<div className="text-right">
 											<p className="text-2xl font-bold text-primary">
-												{formatCurrency(order.amount)}
+												{order.amount}
+											</p>
+											<p className="text-xs text-muted-foreground mt-1">
+												unidades
 											</p>
 										</div>
 									</div>
