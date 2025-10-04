@@ -86,8 +86,7 @@ export function UsersGrid({
 								</Badge>
 							</div>
 
-							{/* Información del usuario */}
-							<div className="flex justify-between items-center">
+							<div className="flex flex-col justify-between gap-2">
 								<h3 className="font-semibold text-lg leading-none">
 									{user.name}
 								</h3>
@@ -97,7 +96,6 @@ export function UsersGrid({
 								</div>
 							</div>
 
-							{/* Botón de órdenes */}
 							<Link
 								to={`/user/${user.id}`}
 								className="flex items-center w-fit p-1 px-2 border border-primary/30 rounded"
@@ -110,7 +108,6 @@ export function UsersGrid({
 				))}
 			</div>
 
-			{/* Paginación */}
 			{pages > 1 && (
 				<div className="flex items-center justify-center">
 					<div className="flex items-center gap-2">
