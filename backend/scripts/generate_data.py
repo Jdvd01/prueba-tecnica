@@ -5,17 +5,21 @@ import random
 from datetime import datetime, timezone
 from faker import Faker
 import faker_commerce
+import sys
+
+# 📌 Validar que exista la carpeta migrations en la raíz del proyecto
+if not os.path.exists("migrations"):
+    print("❌ Error: La carpeta 'migrations/' no existe en la raíz del proyecto\n💡 Hint: Ejecuta pipenv run setup primero")
+    sys.exit(1)
 
 fake = Faker()
 fake.add_provider(faker_commerce.Provider)
 
-db_path = os.path.join("instance", "app.db")
-
-os.makedirs("instance", exist_ok=True)
 
 conn = sqlite3.connect("./instance/app.db")
 cursor = conn.cursor()
 
+# 📌 Crear tablas
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
@@ -49,24 +53,33 @@ users = [
     for _ in range(20)
 ]
 
-cursor.executemany("INSERT INTO users (id, name, email, created_at) VALUES (?, ?, ?, ?)", users)
+cursor.executemany(
+    "INSERT INTO users (id, name, email, created_at) VALUES (?, ?, ?, ?)",
+    users
+)
 
 orders = []
 for user in users:
     user_id = user[0]
     for _ in range(random.randint(1, 5)):
         orders.append((
-            str(uuid.uuid4()),           
-            user_id,                     
-            fake.ecommerce_name(),   
-            round(random.uniform(10, 500), 2),  
-            datetime.now(timezone.utc).isoformat()
+            str(uuid.uuid4()),
+            user_id,
+            fake.ecommerce_name(),
+            random.randint(1, 500),
+            fake.date_time_between(start_date="-2y", end_date="now", tzinfo=timezone.utc).isoformat()
+
         ))
 
-cursor.executemany("INSERT INTO orders (id, user_id, product_name, amount, created_at) VALUES (?, ?, ?, ?, ?)", orders)
+cursor.executemany(
+    "INSERT INTO orders (id, user_id, product_name, amount, created_at) VALUES (?, ?, ?, ?, ?)",
+    orders
+)
 
 conn.commit()
 conn.close()
 
-print(f"Usuarios y Ordenes eliminadas ✅")
-print(f"{len(users)} usuarios y {len(orders)} órdenes insertadas en users.db ✅")
+print("✅ Usuarios y Órdenes eliminados")
+print(f"👤 {len(users)} usuarios generados")
+print(f"📦 {len(orders)} órdenes generados")
+print("📂 Base de datos: ./instance/app.db")
