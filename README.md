@@ -83,6 +83,8 @@ El frontend del proyecto se basa en los siguientes paquetes de Node.js, listados
 
 Estas dependencias se instalarán automáticamente al ejecutar `npm install`.
 
+El frontend utiliza **Tailwind CSS** para los estilos, **shadcn/ui** como librería de componentes y **Redux Toolkit** para el manejo del estado global.
+
 ## Instalación y Ejecución del Backend
 
 Para configurar y ejecutar la parte del backend, sigue estos pasos:
@@ -156,6 +158,8 @@ El backend del proyecto se basa en los siguientes paquetes de Python, listados e
 - `Werkzeug`
 
 Estas dependencias se instalarán automáticamente al ejecutar `pip install -r requirements.txt`.
+
+El backend utiliza **SQLite** como base de datos y **Flask-Migrate** para las migraciones.
 
 ## Notas Adicionales para la Generación de Datos de Prueba
 
