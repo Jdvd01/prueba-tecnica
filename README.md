@@ -12,9 +12,15 @@ Esta es una aplicación que permite gestionar usuarios y sus respectivas órdene
     ```
 
 2.  **Configuración de Variables de Entorno (.env):**
-    Tanto el frontend como el backend requieren archivos `.env` para su configuración. Crea los siguientes archivos en los directorios correspondientes:
+    Tanto el frontend como el backend requieren archivos `.env` para su configuración. Los archivos de ejemplo se encuentran en `.env.backend.example` y `.env.frontend.example`. Debes copiarlos y renombrarlos a `.env` en sus respectivos directorios:
 
     - **Para el Backend (`./backend/.env`):**
+
+      ```bash
+      cd backend
+      cp .env.backend.example .env
+      cd ..
+      ```
 
       ```
       HOST=localhost
@@ -27,6 +33,12 @@ Esta es una aplicación que permite gestionar usuarios y sus respectivas órdene
       Asegúrate de reemplazar `supersecretkey` con una clave secreta fuerte y única.
 
     - **Para el Frontend (`./frontend/.env`):**
+
+      ```bash
+      cd frontend
+      cp .env.frontend.example .env
+      cd ..
+      ```
 
       ```
       VITE_API_URL=http://localhost:8000
