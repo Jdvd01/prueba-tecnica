@@ -2,15 +2,27 @@ from app.models.user import User
 from app.extensions import db
 from app.middlewares.user import serialize_users
 from app.middlewares.general import validate_pagination
+from sqlalchemy import or_
 
-def list_users(page, per_page):
+def list_users(page, per_page, search):
     page, per_page = validate_pagination(page, per_page)
 
-    users_query = User.query.paginate(page=page, per_page=per_page, error_out=False)
+    query = User.query
 
+    if search:
+        query = query.filter(
+            or_(
+                User.name.ilike(f"%{search}%"),
+                User.email.ilike(f"%{search}%")
+            )
+        )
+
+    users_query = query.paginate(page=page, per_page=per_page, error_out=False)
+
+    # Si la página solicitada no tiene items pero hay resultados, mandar la última página válida
     if not users_query.items and users_query.total > 0:
         page = users_query.pages
-        users_query = User.query.paginate(page=page, per_page=per_page, error_out=False)
+        users_query = query.paginate(page=page, per_page=per_page, error_out=False)
 
     users_with_pagination = {
         "pagination": {

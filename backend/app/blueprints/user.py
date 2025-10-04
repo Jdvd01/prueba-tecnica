@@ -10,10 +10,11 @@ user_blueprint = Blueprint("user", __name__, url_prefix="/users")
 def get_users():
     # Ejemplo
     # /users?page=2&per_page=5
+    search = request.args.get("search", "").strip()
     page = request.args.get("page", default=1, type=int)
     per_page = request.args.get("per_page", default=10, type=int)
 
-    return jsonify(list_users(page, per_page)), 200
+    return jsonify(list_users(page, per_page, search)), 200
 
 @user_blueprint.route("/", methods=["POST"])
 def post_user():
