@@ -1,10 +1,10 @@
 import { env } from "@/envConfig";
-import type { UserData } from "@/types/user";
+import type { GetAllUsersParameters, UserData } from "@/types/user";
 import axios from "axios";
 
-const getAllUsers = async (page: number) => {
+const getAllUsers = async ({ page, search }: GetAllUsersParameters) => {
 	const response = await axios.get(
-		`${env.VITE_BACKEND_URL}/users?page=${page}`
+		`${env.VITE_BACKEND_URL}/users?page=${page}&search=${search}`
 	);
 	const data = response.data;
 	return data;

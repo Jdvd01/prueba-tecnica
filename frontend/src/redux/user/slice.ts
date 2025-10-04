@@ -4,6 +4,7 @@ import type {
 	UserInitialState,
 	UsersWithPagination,
 	UserFromApi,
+	GetAllUsersParameters,
 } from "@/types/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import userService from "./service";
@@ -35,11 +36,11 @@ const initialState: UserInitialState = {
 
 export const getAllUsers = createAsyncThunk<
 	UsersWithPagination,
-	number,
+	GetAllUsersParameters,
 	{ rejectValue: string }
->("user/getAllUsers", async (page: number, thunkAPI) => {
+>("user/getAllUsers", async (data: GetAllUsersParameters, thunkAPI) => {
 	try {
-		return await userService.getAllUsers(page);
+		return await userService.getAllUsers(data);
 	} catch (err) {
 		let message: string;
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Users } from "lucide-react";
-import { Modal, UsersGrid } from "@/components/dashboard";
+import { Modal, Search, UsersGrid } from "@/components/dashboard";
 
 import { getAllUsers } from "@/redux/user/slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,16 +13,21 @@ export function Dashboard() {
 		(state: RootState) => state.user
 	);
 
+	const [search, setSearch] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 
+	function handleSearch() {
+		dispatch(getAllUsers({ page: currentPage, search }));
+	}
+
 	useEffect(() => {
-		dispatch(getAllUsers(currentPage));
+		dispatch(getAllUsers({ page: currentPage, search }));
 	}, [currentPage, dispatch]);
 
 	return (
 		<div className="min-h-screen bg-background">
-			<div className="container mx-auto px-4 py-8 max-w-6xl">
-				<div className="flex flex-col gap-8 sm:flex-row md:items-center md:justify-between mb-8">
+			<div className="container mx-auto px-4 py-8 max-w-6xl flex flex-col gap-4">
+				<div className="flex flex-col gap-8 sm:flex-row md:items-center md:justify-between">
 					<div className="space-y-1">
 						<div className="flex items-center gap-3">
 							<div className="rounded-lg bg-primary/10 p-2">
@@ -39,6 +44,12 @@ export function Dashboard() {
 					</div>
 					<Modal page={currentPage} />
 				</div>
+
+				<Search
+					search={search}
+					setSearch={setSearch}
+					handleSearch={handleSearch}
+				/>
 
 				<UsersGrid
 					data={{ pagination, users }}

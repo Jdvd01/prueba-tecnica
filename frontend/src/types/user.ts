@@ -26,3 +26,8 @@ export interface UserInitialState {
 	isError: boolean;
 	message: ErrorFromApi;
 }
+
+export interface GetAllUsersParameters {
+	page: number;
+	search: string;
+}

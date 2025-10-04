@@ -36,7 +36,7 @@ export function Modal({ page }: ModalProps) {
 			await dispatch(createNewUser(userData));
 			setUserData(userDataDefault);
 			setOpen(false);
-			await dispatch(getAllUsers(page));
+			await dispatch(getAllUsers({ page, search: "" }));
 		} catch (error) {
 			console.log(error);
 		}
