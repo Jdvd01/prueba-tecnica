@@ -18,18 +18,11 @@ export const formatDate = (dateString: string) => {
 	});
 };
 
-export const formatCurrency = (amount: number) => {
-	return new Intl.NumberFormat("es-ES", {
-		style: "currency",
-		currency: "USD",
-	}).format(amount);
-};
-
-export const calculateTotal = (orders: OrderFromApi[]) => {
+export const calculateTotal = (orders: OrderFromApi[] = []) => {
 	const total = orders.reduce((acc, current) => {
 		return acc + current.amount;
 	}, 0);
-	return formatCurrency(total);
+	return total;
 };
 
 export const generateSuccessToast = ({

@@ -4,11 +4,14 @@ import type { UserFromApi } from "./user";
 export interface OrderData {
 	user_id: string;
 	product_name: string;
-	amount: number;
+	amount: string;
 }
 
-export interface OrderFromApi extends OrderData {
+export interface OrderFromApi {
 	id: string;
+	user_id: string;
+	product_name: string;
+	amount: number;
 	created_at: string;
 	user?: UserFromApi;
 }
