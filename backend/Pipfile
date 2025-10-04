@@ -9,6 +9,8 @@ flask-cors = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 python-dotenv = "*"
+faker = "*"
+faker-commerce = "*"
 
 [dev-packages]
 
