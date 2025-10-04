@@ -1,7 +1,7 @@
 import os
 
 class Config:
-    HOST = os.getenv("HOST", "127.0.0.1")
+    HOST = os.getenv("HOST", "localhost")
     PORT = int(os.getenv("PORT", 8000))
     DEBUG = os.getenv("DEBUG", True)
     SECRET_KEY = os.getenv("SECRET_KEY", "default_secret")
